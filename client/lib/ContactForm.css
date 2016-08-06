@@ -1,0 +1,76 @@
+
+textarea, input {
+  font-size: 1.2rem;
+  color: #555;
+  padding: 4px;
+  border: 1px solid #ccc;
+}
+
+textarea {
+  height: 5rem;
+  resize: none;
+}
+
+textarea:focus, input:focus {
+  outline: none;
+  box-shadow: inset 0 0 2px 1px rgba(150,200,255,0.50);
+  border: 1px solid rgb(150,200,255);
+}
+
+textarea.invalid, input.invalid {
+  border: 1px solid rgb(255,150,150);
+}
+
+textarea.invalid:focus, input.invalid:focus {
+  box-shadow: inset 0 0 2px 1px rgba(255,150,150,0.50);
+}
+
+.contact-form {
+  padding: 20px;
+  width: 400px;
+  overflow: hidden;
+}
+
+.form_row {
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.label {
+  font-size: 0.8rem;
+  margin: 0 4px;
+}
+
+.form_input {
+  margin: 2px;
+  display: block;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.error {
+  font-size: 0.8rem;
+  margin: 0 4px;
+  color: rgb(200,100,100);
+}
+
+.form_submit {
+  font-family: 'Quicksand', sans-serif;
+  float: right;
+  background-color: #fff;
+  border: 2px solid black;
+  outline: none;
+  color: black;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 10px;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.form_submit:hover {
+  background-color: black;
+  color: white;
+}

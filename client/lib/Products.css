@@ -1,0 +1,63 @@
+.products-header {
+  width: 400px;
+  padding-bottom: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.products-summary {
+  width: 400px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.product {
+  display: flex;
+  justify-content: space-around;
+}
+
+.product-info {
+  width: 500px;
+}
+
+.product-image {
+  width: 300px;
+  height: 300px;
+}
+
+.FluxDAQ {
+  background-image: url("/res/reader.jpg");
+}
+
+.context {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.product-page-background {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+}
+
+.product-page {
+  width: 80%;
+  height: 80%;
+  background-color: white;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+

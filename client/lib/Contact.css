@@ -1,0 +1,77 @@
+.personnel-header, .distributors-header {
+  padding: 5px;
+  margin: 15px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  border-bottom: 1px solid #999;
+}
+
+.header.static {
+  width: 96%;
+  padding: 10px 2%;
+}
+
+.distributors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.distributor {
+  font-size: 0.8rem;
+  width: 250px;
+  padding: 5px;
+}
+
+.dist-row, .person-row {
+  color: #555;
+}
+
+.dist-region {
+  font-size: 1.0rem;
+  font-weight: 900;
+  color: black;
+}
+
+.personnel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.person {
+  font-size: 0.8rem;
+  width: 250px;
+  padding: 5px;
+}
+
+.person-name {
+  font-size: 1.0rem;
+  font-weight: 900;
+}
+
+.contact-holder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 80px;
+}
+
+.contact-advice {
+  display: flex;
+  width: 400px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.focus {
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.person-name {
+  color: black;
+}
