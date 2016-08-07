@@ -77,8 +77,11 @@ function App() {
                  with the goal of providing the best instruments to their customers</p>
               <p>Icons made by
                 <a href="http://www.flaticon.com/authors/gregor-cresnar"
-                   className="icon-man">Gregor Cresnar</a>
-                from<a href="http://www.flaticon.com" className="icon-site">flaticon.com</a>
+                   className="icon-man"
+                   target="_blank">Gregor Cresnar</a>
+                from<a href="http://www.flaticon.com"
+                       className="icon-site"
+                       target="_blank">flaticon.com</a>
               </p>
             </div>
             <div className="footer_right">

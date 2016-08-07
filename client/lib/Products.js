@@ -3,7 +3,8 @@
 import { Router, Route, IndexRoute, Link, browserHistory } from "react-router";
 import React from "react";
 import ReactDOM from "react-dom";
-const _ = require("underscore");
+import { Tag, Invoice } from "./Icons.js";
+import _ from "underscore";
 
 const products = [{
   name: "FluxDAQ",
@@ -37,7 +38,8 @@ const products = [{
     The specified maximum sampling rate is for 2 active differential channels (1 heat flux & 1 thermocouple)",
     "**Dimensions of FluxDAQ USB interface measurement system in an acrylic enclosure \
     that is built to house the FluxDAQ with all the optional additional features"
-  ]
+  ],
+  image: "/res/reader.jpg"
 }, {
   name: "PHFS-01",
   subtitle: "The first low-cost, reliable heat flux sensor",
@@ -63,7 +65,9 @@ const products = [{
   "table-footnotes": [
     "*Response time is for one time constant or 63% sensor output signal to a heat flux step input",
     "**Temperature range may be larger than specified. Further testing is currently being conducted"
-  ]
+  ],
+  "pdf": "/res/PHFS-01.pdf",
+  image: "/res/PHFS-01.png"
 }, {
   name: "PHFS-01e",
   subtitle: "A robust, sensitive heat flux sensor",
@@ -93,7 +97,9 @@ const products = [{
   "table-footnotes": [
     "*Response time is for one time constant or 63% sensor output signal to a heat flux step input",
     "**Temperature range may be larger than specified. Further testing is currently being conducted"
-  ]
+  ],
+  "pdf": "/res/PHFS-01e.pdf",
+  image: "/res/PHFS-01e.png"
 }, {
   name: "PHFS-09",
   subtitle: "The first low-cost, large surface area heat flux sensor on the market",
@@ -115,7 +121,9 @@ const products = [{
   "table-footnotes": [
     "*Response time is for one time constant or 63% sensor output signal to a heat flux step input",
     "**Temperature range may be larger than specified. Further testing is currently being conducted"
-  ]
+  ],
+  "pdf": "/res/PHFS-09.pdf",
+  image: "/res/PHFS-09.png"
 }, {
   name: "PHFS-09e",
   subtitle: "The perfect heat flux sensor for wall measurements",
@@ -137,7 +145,9 @@ const products = [{
   "table-footnotes": [
     "*Response time is for one time constant or 63% sensor output signal to a heat flux step input",
     "**Temperature range may be larger than specified. Further testing is currently being conducted"
-  ]
+  ],
+  "pdf": "/res/PHFS-09e.pdf",
+  image: "/res/PHFS-09e.png"
 }, {
   name: "HTHFS-01",
   subtitle: "Extremely high temperature heat flux sensor",
@@ -156,14 +166,43 @@ const products = [{
   },
   "table-footnotes": [
     "*Temperature range may be larger than specified"
-  ]
+  ],
+  "pdf": "/res/HTHFS-01.pdf",
+  image: "/res/HTHFS-01.png"
 }, {
   name: "Sensor Calibration",
   subtitle: "We offer calibration",
   desc: "We have the capabilities to calibrate our heat flux sensors with both radiation and \
     conduction calibration systems. Do you have a heat flux sensor that you're unsure is \
     accurately calibrated? Inquire about our calibration services.",
+  image: "/res/radiation.jpg"
 }];
+
+const Datasheet = React.createClass({
+  render: function() {
+    if (this.props.value) {
+      return (<div className="product-row product-datasheet">
+        <Invoice />
+        <a className="tagline" href={this.props.value} target="_blank">View Datasheet</a>
+      </div>);
+    } else {
+      return null;
+    }
+  }
+});
+
+const Price = React.createClass({
+  render: function() {
+    if (this.props.value) {
+      return (<div className="product-row product-price">
+        <Tag />
+        <p className="tagline">{"Starting at $" + this.props.value}</p>
+      </div>);
+    } else {
+      return null;
+    }
+  }
+});
 
 const Product = React.createClass({
   render: function() {
@@ -202,13 +241,12 @@ const Product = React.createClass({
       </div>
       <div className="product-main-row">
         <div className="product-info">
-          <div className="product-name">{product.name}</div>
+          <div className="product-name"><h2>{product.name}</h2></div>
           <div className="product-desc">{product.desc}</div>
-          <div className="product-price">
-            {product.price ? "Starting at $" + product.price : ""}
-          </div>
+          <Price value={product.price} />
+          <Datasheet value={product.pdf} />
         </div>
-        <div className={"product-image " + product.name}></div>
+        {product.image ? <img className={"product-image " + product.name} src={product.image} /> : null}
       </div>
       {table}
     </div>;
@@ -223,11 +261,10 @@ const Preview = React.createClass({
     var product = this.props.product;
     return <div className="product">
       <div className="product-info">
-        <div className="product-row product-name">{product.name}</div>
+        <div className="product-row product-name"><h2>{product.name}</h2></div>
         <div className="product-row product-subtitle">{product.subtitle}</div>
-        <div className="product-row product-price">
-          {product.price ? "Starting at $" + product.price : ""}
-        </div>
+          <Price value={product.price} />
+          <Datasheet value={product.pdf} />
         <ul className="links-list">
           <li>
             <Link className="more-info inline-link" to={`/products/${product.name}`}>
@@ -243,7 +280,7 @@ const Preview = React.createClass({
           </li>
         </ul>
       </div>
-      <div className={"product-image " + product.name}></div>
+      {product.image ? <img className={"product-image " + product.name} src={product.image} /> : null}
     </div>;
   }
 });
