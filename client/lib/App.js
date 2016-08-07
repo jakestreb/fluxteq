@@ -20,13 +20,12 @@ function App() {
   // The overview uses the reverse order to determine which tab is selected.
   this.nav = [{
     label: "Overview",
+    text: "The first reliable, low-cost heat flux sensors on the market",
     path: "/"
   }, {
-    label: "Products",
+    label: "Products & Services",
+    text: "Our sensors lead the market in price and quality",
     path: "/products"
-  }, {
-    label: "Calibration",
-    path: "/calibration"
   }, {
     label: "Applications",
     path: "/applications"
@@ -55,7 +54,7 @@ function App() {
         <div className={"overview " + (navItem ? navItem.label : "")} >
           <div className="blackout"></div>
           <div className="overlay">
-            <div className="overlay-text">The first reliable low-cost heat flux sensors on the market</div>
+            <div className="overlay-text">{(navItem ? navItem.text : "")}</div>
           </div>
         </div>
         <div className="content">
@@ -84,7 +83,7 @@ function App() {
             </div>
             <div className="footer_right">
               <div className="email">info@fluxteq.com</div>
-              <div className="phone">434-987-3528</div>
+              <div className="phone">+1-434-987-3528</div>
             </div>
           </div>
         </div>
@@ -143,7 +142,7 @@ function App() {
             <Wrench />
             <p className="tagline">Both radiation and conduction calibration available</p>
           </div>
-          <Link className="inline-link" to={"/calibration"}>
+          <Link className="inline-link" to={"/products/calibration"}>
             Calibration<p className="arrow">>></p>
           </Link>
         </div>
@@ -151,11 +150,7 @@ function App() {
       </div>
     </div>
   );
-  // Home.propTypes = {
-  //   onSubmit: React.PropTypes.func.isRequired
-  // };
 
-  const Calibration = props => {};
   const Applications = props => {};
 
   // init controller
@@ -167,10 +162,10 @@ function App() {
         <IndexRoute component={Home} />
         <Route path="products" component={Products}/>
         <Route path="products/:name" component={Product}/>
-        <Route path="calibration" component={Calibration}/>
         <Route path="applications" component={Applications}/>
       </Route>
       <Route path="/contact" component={Contact}/>
+      <Route path="/contact/:name" component={Contact}/>
     </Router>,
     document.getElementById("main")
   );
@@ -185,6 +180,11 @@ App.prototype.initScrollMagic = function() {
   // Move header up
   new ScrollMagic.Scene({triggerElement: ".nav-links", duration: 200})
     .setTween(TweenMax.to(".header", 1, {"padding": "10px 2%", width: "96%", ease: Linear.easeNone}))
+    .addTo(this.controller);
+
+  // Move up and fade center text
+  new ScrollMagic.Scene({offset: 50, duration: 200})
+    .setTween(TweenMax.to(".overlay-text", 1, {"padding-bottom": "100px", opacity: 0.0, ease: Linear.easeNone}))
     .addTo(this.controller);
 
   // Set header background to black

@@ -66,6 +66,7 @@ const personnel = [{
 
 const Contact = React.createClass({
   render: function() {
+    var product = this.props.params.name;
     return <div>
       <div className="header pinned static">
         <a className="brand" href="/">
@@ -79,7 +80,7 @@ const Contact = React.createClass({
              call us at <b className="focus">+1-434-987-3528</b> to
              place an order.</p>
         </div>
-        <ContactForm />
+        <ContactForm subject={product} />
       </div>
       <div className="personnel-header">Key Personnel</div>
       <div className="personnel">

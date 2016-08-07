@@ -48,6 +48,10 @@
 
 	var App = __webpack_require__(1);
 
+	// php -S localhost:8000
+	// catw client/*/*.css -o static/bundle.css -v
+	// webpack --progress --colors --watch
+
 	$(function () {
 	  window.app = new App();
 	});
@@ -102,13 +106,12 @@
 	  // The overview uses the reverse order to determine which tab is selected.
 	  this.nav = [{
 	    label: "Overview",
+	    text: "The first reliable, low-cost heat flux sensors on the market",
 	    path: "/"
 	  }, {
-	    label: "Products",
+	    label: "Products & Services",
+	    text: "Our sensors lead the market in price and quality",
 	    path: "/products"
-	  }, {
-	    label: "Calibration",
-	    path: "/calibration"
 	  }, {
 	    label: "Applications",
 	    path: "/applications"
@@ -164,7 +167,7 @@
 	            _react2.default.createElement(
 	              "div",
 	              { className: "overlay-text" },
-	              "The first reliable low-cost heat flux sensors on the market"
+	              navItem ? navItem.text : ""
 	            )
 	          )
 	        ),
@@ -234,7 +237,7 @@
 	              _react2.default.createElement(
 	                "div",
 	                { className: "phone" },
-	                "434-987-3528"
+	                "+1-434-987-3528"
 	              )
 	            )
 	          )
@@ -378,7 +381,7 @@
 	          ),
 	          _react2.default.createElement(
 	            _reactRouter.Link,
-	            { className: "inline-link", to: "/calibration" },
+	            { className: "inline-link", to: "/products/calibration" },
 	            "Calibration",
 	            _react2.default.createElement(
 	              "p",
@@ -391,11 +394,7 @@
 	      )
 	    );
 	  };
-	  // Home.propTypes = {
-	  //   onSubmit: React.PropTypes.func.isRequired
-	  // };
 
-	  var Calibration = function Calibration(props) {};
 	  var Applications = function Applications(props) {};
 
 	  // init controller
@@ -410,10 +409,10 @@
 	      _react2.default.createElement(_reactRouter.IndexRoute, { component: Home }),
 	      _react2.default.createElement(_reactRouter.Route, { path: "products", component: _Products.Products }),
 	      _react2.default.createElement(_reactRouter.Route, { path: "products/:name", component: _Products.Product }),
-	      _react2.default.createElement(_reactRouter.Route, { path: "calibration", component: Calibration }),
 	      _react2.default.createElement(_reactRouter.Route, { path: "applications", component: Applications })
 	    ),
-	    _react2.default.createElement(_reactRouter.Route, { path: "/contact", component: _Contact2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: "/contact", component: _Contact2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "/contact/:name", component: _Contact2.default })
 	  ), document.getElementById("main"));
 	}
 
@@ -423,6 +422,9 @@
 
 	  // Move header up
 	  new _ScrollMagic2.default.Scene({ triggerElement: ".nav-links", duration: 200 }).setTween(_gsap.TweenMax.to(".header", 1, { "padding": "10px 2%", width: "96%", ease: _gsap.Linear.easeNone })).addTo(this.controller);
+
+	  // Move up and fade center text
+	  new _ScrollMagic2.default.Scene({ offset: 50, duration: 200 }).setTween(_gsap.TweenMax.to(".overlay-text", 1, { "padding-bottom": "100px", opacity: 0.0, ease: _gsap.Linear.easeNone })).addTo(this.controller);
 
 	  // Set header background to black
 	  var addBackground = new _ScrollMagic2.default.Scene({ triggerElement: ".nav-links" }).setClassToggle(".header", "pinned") // add class toggle
@@ -38173,7 +38175,6 @@
 	    materials and placed within a high temperature inconel housing. Inconel sheathing also protects \
 	    the sensor's measurement leads against extreme temperatures that is experienced in harsh testing \
 	    environments.",
-	  price: "???",
 	  table: {
 	    "Sensor Type": "Differential-Temperature Thermopile",
 	    "Nominal Sensitivity": "Approx. 300 µV/(W/cm^2)",
@@ -38183,6 +38184,12 @@
 	    "Sensing Area Size": "9.8 mm x 5.7 mm"
 	  },
 	  "table-footnotes": ["*Temperature range may be larger than specified"]
+	}, {
+	  name: "Sensor Calibration",
+	  subtitle: "We offer calibration",
+	  desc: "We have the capabilities to calibrate our heat flux sensors with both radiation and \
+	    conduction calibration systems. Do you have a heat flux sensor that you're unsure is \
+	    accurately calibrated? Inquire about our calibration services."
 	}];
 
 	var Product = _react2.default.createClass({
@@ -38194,34 +38201,19 @@
 	    var product = _.find(products, function (product) {
 	      return product.name === _this.props.params.name;
 	    });
-	    return _react2.default.createElement(
-	      "div",
-	      { className: "product-page" },
-	      _react2.default.createElement(
+	    var table = null;
+	    if (product.table) {
+	      table = _react2.default.createElement(
 	        "div",
-	        { className: "product-info" },
+	        { className: "product-table-box" },
 	        _react2.default.createElement(
 	          "div",
-	          { className: "product-name" },
-	          product.name
+	          { className: "product-table-header" },
+	          "Specifications"
 	        ),
-	        _react2.default.createElement(
-	          "div",
-	          { className: "product-desc" },
-	          product.desc
-	        ),
-	        _react2.default.createElement(
-	          "div",
-	          { className: "product-price" },
-	          product.price
-	        )
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        { className: "product-table" },
 	        _react2.default.createElement(
 	          "table",
-	          null,
+	          { className: "product-table" },
 	          _react2.default.createElement(
 	            "tbody",
 	            null,
@@ -38254,8 +38246,64 @@
 	            );
 	          })
 	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      "div",
+	      { className: "product-page" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "product-page-nav" },
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { className: "back inline-link", to: "/products" },
+	          _react2.default.createElement(
+	            "p",
+	            { className: "back-arrow" },
+	            "<<"
+	          ),
+	          "Back to products"
+	        ),
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { className: "nav-inquiry inline-link",
+	            to: "/contact/" + product.name,
+	            onClick: function onClick() {
+	              return window.scrollTo(0, 0);
+	            } },
+	          "Request an order",
+	          _react2.default.createElement(
+	            "p",
+	            { className: "arrow" },
+	            ">>"
+	          )
+	        )
 	      ),
-	      _react2.default.createElement("div", { className: "product-image " + product.name })
+	      _react2.default.createElement(
+	        "div",
+	        { className: "product-main-row" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "product-info" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "product-name" },
+	            product.name
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "product-desc" },
+	            product.desc
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "product-price" },
+	            product.price ? "Starting at $" + product.price : ""
+	          )
+	        ),
+	        _react2.default.createElement("div", { className: "product-image " + product.name })
+	      ),
+	      table
 	    );
 	  }
 	});
@@ -38287,12 +38335,43 @@
 	        _react2.default.createElement(
 	          "div",
 	          { className: "product-row product-price" },
-	          product.price
+	          product.price ? "Starting at $" + product.price : ""
 	        ),
 	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: "/products/" + product.name },
-	          "More information"
+	          "ul",
+	          { className: "links-list" },
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { className: "more-info inline-link", to: "/products/" + product.name },
+	              "More information",
+	              _react2.default.createElement(
+	                "p",
+	                { className: "arrow" },
+	                ">>"
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { className: "inquiry inline-link",
+	                to: "/contact/" + product.name,
+	                onClick: function onClick() {
+	                  return window.scrollTo(0, 0);
+	                } },
+	              "Request an order",
+	              _react2.default.createElement(
+	                "p",
+	                { className: "arrow" },
+	                ">>"
+	              )
+	            )
+	          )
 	        )
 	      ),
 	      _react2.default.createElement("div", { className: "product-image " + product.name })
@@ -38309,16 +38388,6 @@
 	      null,
 	      _react2.default.createElement(
 	        "div",
-	        { className: "products-header" },
-	        "Simple and reliable"
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        { className: "products-summary" },
-	        "Our products lead the market as low-cost solutions for measuring heat flux. All products are eligible for bulk discounts."
-	      ),
-	      _react2.default.createElement(
-	        "div",
 	        { className: "products-list" },
 	        products.map(function (product, i) {
 	          return _react2.default.createElement(Preview, {
@@ -38326,6 +38395,27 @@
 	            product: product
 	          });
 	        })
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "bulk-products" },
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-05", src: "/res/Dark_0.5.png" }),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-1", src: "/res/Light_1.png" }),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-4", src: "/res/Light_4.png" }),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-05", src: "/res/Light_0.5.png" }),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-1", src: "/res/Dark_1.png" }),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-05", src: "/res/Light_0.5.png" }),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "bulk-products-summary" },
+	          "All products are eligible for bulk discounts"
+	        ),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-05", src: "/res/Dark_0.5.png" }),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-1", src: "/res/Light_1.png" }),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-05", src: "/res/Light_0.5.png" }),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-1", src: "/res/Dark_1.png" }),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-4", src: "/res/Dark_4.png" }),
+	        _react2.default.createElement("img", { className: "sensor-icon sensor-icon-05", src: "/res/Dark_0.5.png" })
 	      )
 	    );
 	  }
@@ -39971,6 +40061,7 @@
 	  displayName: "Contact",
 
 	  render: function render() {
+	    var product = this.props.params.name;
 	    return _react2.default.createElement(
 	      "div",
 	      null,
@@ -40012,7 +40103,7 @@
 	            " to place an order."
 	          )
 	        ),
-	        _react2.default.createElement(ContactForm, null)
+	        _react2.default.createElement(ContactForm, { subject: product })
 	      ),
 	      _react2.default.createElement(
 	        "div",
@@ -40123,10 +40214,17 @@
 
 	  propTypes: {
 	    label: _react2.default.PropTypes.string.isRequired,
-	    value: _react2.default.PropTypes.string.isRequired,
+	    value: _react2.default.PropTypes.string,
+	    focus: _react2.default.PropTypes.bool,
 	    error: _react2.default.PropTypes.string.isRequired,
 	    onChange: _react2.default.PropTypes.func.isRequired,
 	    textarea: _react2.default.PropTypes.bool
+	  },
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.focus) {
+	      var input = this.props.textarea ? this.refs.textarea : this.refs.input;
+	      _reactDom2.default.findDOMNode(input).focus();
+	    }
 	  },
 	  render: function render() {
 	    var _this = this;
@@ -40141,12 +40239,14 @@
 	      ),
 	      this.props.textarea ? _react2.default.createElement("textarea", {
 	        value: this.props.value,
+	        ref: "textarea",
 	        className: "form_input " + (this.props.error ? "invalid" : ""),
 	        onChange: function onChange(e) {
 	          return _this.props.onChange(e);
 	        }
 	      }) : _react2.default.createElement("input", {
 	        value: this.props.value,
+	        ref: "input",
 	        className: "form_input " + (this.props.error ? "invalid" : ""),
 	        onChange: function onChange(e) {
 	          return _this.props.onChange(e);
@@ -40164,6 +40264,9 @@
 	var ContactForm = _react2.default.createClass({
 	  displayName: "ContactForm",
 
+	  propTypes: {
+	    subject: _react2.default.PropTypes.string
+	  },
 	  getInitialState: function getInitialState() {
 	    return {
 	      name: {
@@ -40202,6 +40305,7 @@
 	          label: "Name",
 	          value: this.state.name.value,
 	          error: this.state.name.error,
+	          focus: !!this.props.subject,
 	          onChange: function onChange(e) {
 	            return _this2.setState({
 	              name: {
@@ -40226,7 +40330,7 @@
 	        }),
 	        _react2.default.createElement(FormInput, {
 	          label: "Subject / Product of interest",
-	          value: this.state.subject.value,
+	          value: this.state.subject.value || this.props.subject,
 	          error: this.state.subject.error,
 	          onChange: function onChange(e) {
 	            return _this2.setState({

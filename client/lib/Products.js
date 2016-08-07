@@ -146,7 +146,6 @@ const products = [{
     materials and placed within a high temperature inconel housing. Inconel sheathing also protects \
     the sensor's measurement leads against extreme temperatures that is experienced in harsh testing \
     environments.",
-  price: "???",
   table: {
     "Sensor Type":          "Differential-Temperature Thermopile",
     "Nominal Sensitivity":  "Approx. 300 µV/(W/cm^2)",
@@ -158,19 +157,22 @@ const products = [{
   "table-footnotes": [
     "*Temperature range may be larger than specified"
   ]
+}, {
+  name: "Sensor Calibration",
+  subtitle: "We offer calibration",
+  desc: "We have the capabilities to calibrate our heat flux sensors with both radiation and \
+    conduction calibration systems. Do you have a heat flux sensor that you're unsure is \
+    accurately calibrated? Inquire about our calibration services.",
 }];
 
 const Product = React.createClass({
   render: function() {
     var product = _.find(products, product => product.name === this.props.params.name);
-    return <div className="product-page">
-      <div className="product-info">
-        <div className="product-name">{product.name}</div>
-        <div className="product-desc">{product.desc}</div>
-        <div className="product-price">{product.price}</div>
-      </div>
-      <div className="product-table">
-        <table>
+    var table = null;
+    if (product.table) {
+      table = (<div className="product-table-box">
+        <div className="product-table-header">Specifications</div>
+        <table className="product-table">
           <tbody>
             {_.map(product.table, (tableItem, key) => (
               <tr key={key} className="table-row">
@@ -185,8 +187,30 @@ const Product = React.createClass({
             <div key={i} className="product-table-footnote">{footnote}</div>
           ))}
         </div>
+      </div>);
+    }
+    return <div className="product-page">
+      <div className="product-page-nav">
+        <Link className="back inline-link" to="/products">
+          <p className="back-arrow">&lt;&lt;</p>Back to products
+        </Link>
+        <Link className="nav-inquiry inline-link"
+              to={`/contact/${product.name}`}
+              onClick={() => window.scrollTo(0, 0)}>
+          Request an order<p className="arrow">>></p>
+        </Link>
       </div>
-      <div className={"product-image " + product.name}></div>
+      <div className="product-main-row">
+        <div className="product-info">
+          <div className="product-name">{product.name}</div>
+          <div className="product-desc">{product.desc}</div>
+          <div className="product-price">
+            {product.price ? "Starting at $" + product.price : ""}
+          </div>
+        </div>
+        <div className={"product-image " + product.name}></div>
+      </div>
+      {table}
     </div>;
   }
 });
@@ -201,8 +225,23 @@ const Preview = React.createClass({
       <div className="product-info">
         <div className="product-row product-name">{product.name}</div>
         <div className="product-row product-subtitle">{product.subtitle}</div>
-        <div className="product-row product-price">{product.price}</div>
-        <Link to={`/products/${product.name}`}>More information</Link>
+        <div className="product-row product-price">
+          {product.price ? "Starting at $" + product.price : ""}
+        </div>
+        <ul className="links-list">
+          <li>
+            <Link className="more-info inline-link" to={`/products/${product.name}`}>
+              More information<p className="arrow">>></p>
+            </Link>
+          </li>
+          <li>
+            <Link className="inquiry inline-link"
+                  to={`/contact/${product.name}`}
+                  onClick={() => window.scrollTo(0, 0)}>
+              Request an order<p className="arrow">>></p>
+            </Link>
+          </li>
+        </ul>
       </div>
       <div className={"product-image " + product.name}></div>
     </div>;
@@ -212,11 +251,6 @@ const Preview = React.createClass({
 const Products = React.createClass({
   render: function() {
     return <div>
-      <div className="products-header">Simple and reliable</div>
-      <div className="products-summary">
-        Our products lead the market as low-cost solutions for measuring heat flux.
-        All products are eligible for bulk discounts.
-      </div>
       <div className="products-list">
         {products.map((product, i) => (
           <Preview
@@ -224,6 +258,23 @@ const Products = React.createClass({
             product={product}
           />
         ))}
+      </div>
+      <div className="bulk-products">
+        <img className="sensor-icon sensor-icon-05" src="/res/Dark_0.5.png" />
+        <img className="sensor-icon sensor-icon-1" src="/res/Light_1.png" />
+        <img className="sensor-icon sensor-icon-4" src="/res/Light_4.png" />
+        <img className="sensor-icon sensor-icon-05" src="/res/Light_0.5.png" />
+        <img className="sensor-icon sensor-icon-1" src="/res/Dark_1.png" />
+        <img className="sensor-icon sensor-icon-05" src="/res/Light_0.5.png" />
+        <div className="bulk-products-summary">
+          All products are eligible for bulk discounts
+        </div>
+        <img className="sensor-icon sensor-icon-05" src="/res/Dark_0.5.png" />
+        <img className="sensor-icon sensor-icon-1" src="/res/Light_1.png" />
+        <img className="sensor-icon sensor-icon-05" src="/res/Light_0.5.png" />
+        <img className="sensor-icon sensor-icon-1" src="/res/Dark_1.png" />
+        <img className="sensor-icon sensor-icon-4" src="/res/Dark_4.png" />
+        <img className="sensor-icon sensor-icon-05" src="/res/Dark_0.5.png" />
       </div>
     </div>;
   }

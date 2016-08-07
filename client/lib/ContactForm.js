@@ -7,10 +7,17 @@ const _ = require("underscore");
 const FormInput = React.createClass({
   propTypes: {
     label: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string,
+    focus: React.PropTypes.bool,
     error: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func.isRequired,
     textarea: React.PropTypes.bool
+  },
+  componentDidMount: function(){
+    if (this.props.focus) {
+      var input = this.props.textarea ? this.refs.textarea : this.refs.input;
+      ReactDOM.findDOMNode(input).focus();
+    }
   },
   render: function() {
     return <div className="form_row">
@@ -18,11 +25,13 @@ const FormInput = React.createClass({
       {this.props.textarea ?
         (<textarea
           value={this.props.value}
+          ref="textarea"
           className={"form_input " + (this.props.error ? "invalid" : "")}
           onChange={e => this.props.onChange(e)}
         />) :
         (<input
           value={this.props.value}
+          ref="input"
           className={"form_input " + (this.props.error ? "invalid" : "")}
           onChange={e => this.props.onChange(e)}
         />)
@@ -33,6 +42,9 @@ const FormInput = React.createClass({
 });
 
 const ContactForm = React.createClass({
+  propTypes: {
+    subject: React.PropTypes.string
+  },
   getInitialState: () => ({
     name: {
       value: "",
@@ -63,6 +75,7 @@ const ContactForm = React.createClass({
           label="Name"
           value={this.state.name.value}
           error={this.state.name.error}
+          focus={!!this.props.subject}
           onChange={e => this.setState({
             name: {
               value: e.target.value,
@@ -83,7 +96,7 @@ const ContactForm = React.createClass({
         />
         <FormInput
           label="Subject / Product of interest"
-          value={this.state.subject.value}
+          value={this.state.subject.value || this.props.subject}
           error={this.state.subject.error}
           onChange={e => this.setState({
             subject: {
