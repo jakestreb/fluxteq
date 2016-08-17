@@ -223,6 +223,24 @@ html, body, #main, .home {
 .icon-man, .icon-site {
   margin: 0 3px;
 }
+.application {
+  display: flex;
+  justify-content: center;
+}
+
+.application-info {
+  width: 800px;
+  margin: 20px;
+}
+
+.application-header {
+  display: flex;
+  align-items: center;
+}
+
+.application-name {
+  display: inline-block;
+}
 .personnel-header, .distributors-header {
   padding: 5px;
   margin: 15px;
