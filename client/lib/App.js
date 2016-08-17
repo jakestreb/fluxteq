@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import { TweenMax, TimelineMax, Linear } from "gsap";
 import ScrollMagic from "ScrollMagic";
 import { Product, Products } from "./Products.js";
+import { Application, Applications } from "./Applications.js";
 import Contact from "./Contact.js";
 import { Connection, Box, Coins, Graphic, Glasses, Checked, Wrench } from "./Icons.js";
 import util from "./util.js";
@@ -28,6 +29,7 @@ function App() {
     path: "/products"
   }, {
     label: "Applications",
+    text: "Applications in a variety of disciplines",
     path: "/applications"
   }];
 
@@ -154,8 +156,6 @@ function App() {
     </div>
   );
 
-  const Applications = props => {};
-
   // init controller
   this.controller = new ScrollMagic.Controller();
 
@@ -166,6 +166,7 @@ function App() {
         <Route path="products" component={Products}/>
         <Route path="products/:name" component={Product}/>
         <Route path="applications" component={Applications}/>
+        <Route path="applications/:name" component={Application}/>
       </Route>
       <Route path="/contact" component={Contact}/>
       <Route path="/contact/:name" component={Contact}/>

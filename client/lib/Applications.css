@@ -1,0 +1,18 @@
+.application {
+  display: flex;
+  justify-content: center;
+}
+
+.application-info {
+  width: 800px;
+  margin: 20px;
+}
+
+.application-header {
+  display: flex;
+  align-items: center;
+}
+
+.application-name {
+  display: inline-block;
+}
