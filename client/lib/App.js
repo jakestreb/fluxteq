@@ -29,7 +29,7 @@ function App() {
     path: "/products"
   }, {
     label: "Applications",
-    text: "Hundreds of applications in a variety of disciplines",
+    text: "Applications in a variety of disciplines",
     path: "/applications"
   }];
 
